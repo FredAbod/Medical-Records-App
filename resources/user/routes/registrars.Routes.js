@@ -1,10 +1,13 @@
 import express from 'express';
 import { isAuthenticated } from '../../../middleware/isAuthenticated';
-import { createRegistrar, deleteRegistrar, getAllRegistrars, getRegistrarByName, updateRegistrar } from '../controllers/registrars.Controllers';
+import { createRegistrar, deleteRegistrar, getAllRegistrars, getRegistrarByName, loginRegistrar, updateRegistrar } from '../controllers/registrars.Controllers';
 const router = express.Router();
 
 // Add A Registrar
 router.post('/addRegistrar',isAuthenticated, createRegistrar);
+
+// Login A Registrar
+router.post('/addRegistrar', loginRegistrar);
 
 // Update A Registrar Details
 router.patch('/updateRegistrar',isAuthenticated, updateRegistrar);

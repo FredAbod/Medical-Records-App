@@ -181,40 +181,48 @@ export const createLabTech = async (req, res, next) => {
     }
   };
 
-  export const getAllPharmacists = async (req, res, next) => {
-  try {
-    const pharmacists = await Pharmacist.find();
-    return successResMsg(res, 200, {
-      success: true,
-      pharmacists,
-      message: "Pharmacists retrieved successfully",
-    });
-  } catch (error) {
-    console.error(error);
-    return errorResMsg(res, 500, {
-      error: error.message,
-      message: "Internal server error",
-    });
-  }
-};
-
-export const getPharmacistByName = async (req, res, next) => {
-  try {
-    const name = req.params.name;
-    const pharmacist = await Pharmacist.findOne({ name });
-    if (!pharmacist) {
-      return errorResMsg(res, 404, "Pharmacist not found");
+  export const loginLabTech = async (req, res, next) => {
+    try {
+      const { email, password } = req.body;
+  
+      // Check if email is provided
+      if (!email) {
+        return errorResMsg(res, 400, "Email is required");
+      }
+  
+      // Check if password is provided
+      if (!password) {
+        return errorResMsg(res, 400, "Password is required");
+      }
+  
+      // Find the lab technician by email
+      const labTech = await LabTech.findOne({ email });
+      if (!labTech) {
+        return errorResMsg(res, 406, "Lab Technician does not exist");
+      }
+  
+      const checkPassword = await passwordCompare(password, labTech.password);
+  
+      // if user password is not correct throw error ==> invalid credentials
+      if (!checkPassword) {
+        return errorResMsg(res, 406, "invalid credentials");
+      }
+      const token = createJwtToken({ labTechId: labTech._id });
+      res.cookie("access_token", token);
+      // save the token
+      labTech.token = token;
+      await labTech.save();
+      // Authenticated!
+      return successResMsg(res, 200, {
+        success: true,
+        labTech: labTech,
+        message: "Lab Technician logged in successfully",
+      });
+    } catch (error) {
+      console.error(error);
+      return errorResMsg(res, 500, {
+        error: error.message,
+        message: "Internal server error",
+      });
     }
-    return successResMsg(res, 200, {
-      success: true,
-      pharmacist,
-      message: "Pharmacist retrieved successfully",
-    });
-  } catch (error) {
-    console.error(error);
-    return errorResMsg(res, 500, {
-      error: error.message,
-      message: "Internal server error",
-    });
-  }
-};
+  };

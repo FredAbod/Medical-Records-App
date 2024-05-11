@@ -1,4 +1,5 @@
-import { passwordHash } from "../../../utils/lib/bcrypt";
+import { createJwtToken } from "../../../middleware/isAuthenticated";
+import { passwordCompare, passwordHash } from "../../../utils/lib/bcrypt";
 import { errorResMsg, successResMsg } from "../../../utils/lib/response";
 import Admin from "../models/admin.Models";
 import Registrar from "../models/registrars.Models";
@@ -208,6 +209,53 @@ export const createRegistrar = async (req, res, next) => {
         success: true,
         registrar,
         message: "Registrar retrieved successfully",
+      });
+    } catch (error) {
+      console.error(error);
+      return errorResMsg(res, 500, {
+        error: error.message,
+        message: "Internal server error",
+      });
+    }
+  };
+
+  export const loginRegistrar = async (req, res, next) => {
+    try {
+      const { email, password } = req.body;
+  
+      // Check if email is provided
+      if (!email) {
+        return errorResMsg(res, 400, "Email is required");
+      }
+  
+      // Check if password is provided
+      if (!password) {
+        return errorResMsg(res, 400, "Password is required");
+      }
+  
+      // Find the registrar by email
+      const registrar = await Registrar.findOne({ email });
+      if (!registrar) {
+        return errorResMsg(res, 406, "Registrar does not exist");
+      }
+  
+      const checkPassword = await passwordCompare(password, registrar.password);
+  
+      // if user password is not correct throw error ==> invalid credentials
+      if (!checkPassword) {
+        return errorResMsg(res, 406, "invalid credentials");
+      }
+      const token = createJwtToken({ registrarId: registrar._id });
+
+      res.cookie("access_token", token);
+      // save the token
+      registrar.token = token;
+      await registrar.save();
+      // Authenticated!
+      return successResMsg(res, 200, {
+        success: true,
+        registrar: registrar,
+        message: "Registrar logged in successfully",
       });
     } catch (error) {
       console.error(error);

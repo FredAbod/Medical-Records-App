@@ -16,6 +16,8 @@ const patientSchema = new mongoose.Schema({
   genotype: { type: String, required: true },
   height: { type: String, required: true },
   weight: { type: String, required: true },
+  vitals: { type: String },
+  admitted: { type: Boolean, default: false, required: true},
 },
 {
   timestamps: true,

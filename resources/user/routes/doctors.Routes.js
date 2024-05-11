@@ -1,10 +1,19 @@
 import express from 'express';
 import { isAuthenticated } from '../../../middleware/isAuthenticated';
-import { createDoctor, deleteDoctor, getAllDoctors, getDoctorByName, updateDoctor } from '../controllers/doctors.Controller';
+import { addDiagnosis, addLabOrder, createDoctor, deleteDoctor, getAllDoctors, getDoctorByName, loginDoctor, updateDoctor } from '../controllers/doctors.Controller';
 const router = express.Router();
 
 // Add A Doctor
 router.post('/addDoctor',isAuthenticated, createDoctor);
+
+// Login A Doctor
+router.post('/login', loginDoctor);
+
+// Add Diagnosis
+router.post('/diagnosis',isAuthenticated, addDiagnosis);
+
+// Create A Lab Order
+router.post('/labOrder',isAuthenticated, addLabOrder);
 
 // Update A Doctor Details
 router.patch('/updateDoctor',isAuthenticated, updateDoctor);

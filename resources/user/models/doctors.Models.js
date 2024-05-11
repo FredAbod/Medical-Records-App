@@ -9,6 +9,7 @@ const doctorSchema = new mongoose.Schema({
   phoneNumber: { type: Number, required: true },
   email: { type: String, required: true, unique: true },
   department: { type: String, required: true },
+  token: { type: String },
   maritalStatus: { type: String, required: true },
   stateOfOrigin: { type: String, required: true },
   country: { type: String, required: true },

@@ -1,4 +1,5 @@
-import { passwordHash } from "../../../utils/lib/bcrypt";
+import { createJwtToken } from "../../../middleware/isAuthenticated";
+import { passwordCompare, passwordHash } from "../../../utils/lib/bcrypt";
 import { errorResMsg, successResMsg } from "../../../utils/lib/response";
 import Admin from "../models/admin.Models";
 import Pharmacist from "../models/pharmacists.Models";
@@ -214,6 +215,52 @@ export const updatePharmacist = async (req, res, next) => {
         success: true,
         pharmacist,
         message: "Pharmacist retrieved successfully",
+      });
+    } catch (error) {
+      console.error(error);
+      return errorResMsg(res, 500, {
+        error: error.message,
+        message: "Internal server error",
+      });
+    }
+  };
+
+  export const loginPharmacist = async (req, res, next) => {
+    try {
+      const { email, password } = req.body;
+  
+      // Check if email is provided
+      if (!email) {
+        return errorResMsg(res, 400, "Email is required");
+      }
+  
+      // Check if password is provided
+      if (!password) {
+        return errorResMsg(res, 400, "Password is required");
+      }
+  
+      // Find the pharmacist by email
+      const pharmacist = await Pharmacist.findOne({ email });
+      if (!pharmacist) {
+        return errorResMsg(res, 406, "Pharmacist does not exist");
+      }
+  
+      const checkPassword = await passwordCompare(password, pharmacist.password);
+  
+      // if user password is not correct throw error ==> invalid credentials
+      if (!checkPassword) {
+        return errorResMsg(res, 406, "invalid credentials");
+      }
+      const token = createJwtToken({ pharmacistId: pharmacist._id });
+      res.cookie("access_token", token);
+      // save the token
+      pharmacist.token = token;
+      await pharmacist.save();
+      // Authenticated!
+      return successResMsg(res, 200, {
+        success: true,
+        pharmacist: pharmacist,
+        message: "Pharmacist logged in successfully",
       });
     } catch (error) {
       console.error(error);
