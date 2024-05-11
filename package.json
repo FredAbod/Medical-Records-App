@@ -17,6 +17,7 @@
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^5.1.0",
     "mongoose": "^7.0.3",
+    "morgan": "^1.10.0",
     "pino": "^8.11.0",
     "pino-pretty": "^10.0.0"
   },
