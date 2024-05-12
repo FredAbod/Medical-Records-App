@@ -13,7 +13,7 @@ const labTechSchema = new mongoose.Schema({
   country: { type: String, required: true },
   nextOfKinName: { type: String, required: true },
   nextOfKinPhoneNumber: { type: Number, required: true },
-  token: { type: Number },
+  token: { type: String },
 },
 {
   timestamps: true,
