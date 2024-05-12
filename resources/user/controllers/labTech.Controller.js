@@ -1,4 +1,4 @@
-import { passwordHash } from "../../../utils/lib/bcrypt.js";
+import { passwordCompare, passwordHash } from "../../../utils/lib/bcrypt.js";
 import { errorResMsg, successResMsg } from "../../../utils/lib/response.js";
 import Admin from "../models/admin.Models.js";
 import Doctor from "../models/doctors.Models.js";
