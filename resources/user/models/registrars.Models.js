@@ -11,6 +11,7 @@ const registrarSchema = new mongoose.Schema({
     maritalStatus: { type: String },
     stateOfOrigin: { type: String },
     country: { type: String },
+    token: { type: String },
     nextOfKinName: { type: String },
     nextOfKinPhoneNumber: { type: Number }
 },

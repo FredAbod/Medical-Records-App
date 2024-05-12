@@ -7,7 +7,7 @@ const router = express.Router();
 router.post('/addRegistrar',isAuthenticated, createRegistrar);
 
 // Login A Registrar
-router.post('/addRegistrar', loginRegistrar);
+router.post('/login', loginRegistrar);
 
 // Update A Registrar Details
 router.patch('/updateRegistrar/:id',isAuthenticated, updateRegistrar);
