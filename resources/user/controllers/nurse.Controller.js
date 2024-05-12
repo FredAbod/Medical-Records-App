@@ -6,6 +6,7 @@ import Doctor from "../models/doctors.Models.js";
 import Nurse from "../models/nurses.Models.js";
 import Patient from "../models/patient.Models.js";
 import Room from "../models/room.Models.js";
+import Vitals from "../models/vitals.Models.js";
 
 export const createNurse = async (req, res, next) => {
   try {
