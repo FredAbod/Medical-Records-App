@@ -4,7 +4,9 @@ const vitalsSchema = new mongoose.Schema({
     bloodPressure: { type: String },
     temperature: { type: String },
     height: { type: String },
-    weight: { type: String }
+    weight: { type: String },
+    patientId: { type: mongoose.Schema.Types.ObjectId, ref: 'Patient' },
+
 },
 {
   timestamps: true,

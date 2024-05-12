@@ -294,6 +294,7 @@ export const addVitals = async (req, res, next) => {
       temperature,
       height,
       weight,
+      patientId: patient._id,
     });
 
     // Save the vitals
@@ -337,10 +338,10 @@ export const admitPatient = async (req, res, next) => {
     await patient.save();
 
     // Return success response
-    return successResMsg(res, 201, {
+    return successResMsg(res, 200, {
       success: true,
       vitals: patient,
-      message: "Patient Admitted added successfully",
+      message: "Patient Admitted successfully",
     });
   } catch (error) {
     console.error(error);
