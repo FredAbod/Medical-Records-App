@@ -13,6 +13,7 @@ const nurseSchema = new mongoose.Schema({
   stateOfOrigin: { type: String, required: true },
   country: { type: String, required: true },
   nextOfKinName: { type: String, required: true },
+  token: { type: String },
   nextOfKinPhoneNumber: { type: Number, required: true }
 },
 {
