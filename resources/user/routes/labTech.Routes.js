@@ -10,6 +10,8 @@ router.post('/addLabTech',isAuthenticated, createLabTech);
 // Add A Lab Result
 router.post('/addLabResult',isAuthenticated, addLabResult);
 
+//Get Lab Order
+
 // Login A Lab Technician
 router.post('/loginLabTech', loginLabTech);
 

@@ -1,3 +1,4 @@
+import { createJwtToken } from "../../../middleware/isAuthenticated.js";
 import { passwordCompare, passwordHash } from "../../../utils/lib/bcrypt.js";
 import { errorResMsg, successResMsg } from "../../../utils/lib/response.js";
 import Admin from "../models/admin.Models.js";
@@ -277,3 +278,24 @@ export const createLabTech = async (req, res, next) => {
       });
     }
   };
+
+  // export const getNurseByName = async (req, res, next) => {
+  //   try {
+  //     const name = req.params.name;
+  //     const nurse = await Nurse.findOne({ name });
+  //     if (!nurse) {
+  //       return errorResMsg(res, 404, "Nurse not found");
+  //     }
+  //     return successResMsg(res, 200, {
+  //       success: true,
+  //       nurse,
+  //       message: "Nurse retrieved successfully",
+  //     });
+  //   } catch (error) {
+  //     console.error(error);
+  //     return errorResMsg(res, 500, {
+  //       error: error.message,
+  //       message: "Internal server error",
+  //     });
+  //   }
+  // };
