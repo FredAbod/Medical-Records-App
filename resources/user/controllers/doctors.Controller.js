@@ -4,6 +4,7 @@ import { errorResMsg, successResMsg } from "../../../utils/lib/response.js";
 import Admin from "../models/admin.Models.js";
 import Diagnosis from "../models/diagnosis.Models.js";
 import Doctor from "../models/doctors.Models.js";
+import LabOrder from "../models/labOrder.Models.js";
 import LabTech from "../models/labTech.Models.js";
 import Patient from "../models/patient.Models.js";
 import Prescription from "../models/prescription.Models.js";
