@@ -2,7 +2,6 @@ import mongoose from "mongoose";
 
 const medicalHistorySchema = new mongoose.Schema(
   {
-    diagnosis: { type: String },
     medicationName: { type: String },
     medicationDosage: { type: String },
     medicationDuration: { type: String },
@@ -13,6 +12,7 @@ const medicalHistorySchema = new mongoose.Schema(
       ref: "Patient",
     },
     referringDoctor: { type: mongoose.Schema.Types.ObjectId, ref: "Doctor" },
+    diagnosis: { type: mongoose.Schema.Types.ObjectId, ref: "Diagnosis" },
   },
   {
     timestamps: true,

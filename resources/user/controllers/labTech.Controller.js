@@ -1,7 +1,9 @@
 import { passwordHash } from "../../../utils/lib/bcrypt";
 import { errorResMsg } from "../../../utils/lib/response";
 import Admin from "../models/admin.Models";
+import Doctor from "../models/doctors.Models";
 import LabTech from "../models/labTech.Models";
+import Patient from "../models/patient.Models";
 
 
 
@@ -217,6 +219,55 @@ export const createLabTech = async (req, res, next) => {
         success: true,
         labTech: labTech,
         message: "Lab Technician logged in successfully",
+      });
+    } catch (error) {
+      console.error(error);
+      return errorResMsg(res, 500, {
+        error: error.message,
+        message: "Internal server error",
+      });
+    }
+  };
+
+  export const addLabResult = async (req, res, next) => {
+    try {
+      const { result, dateReleased, patientName, doctorName} = req.body;
+      const labTechId = req.user.labTechId;
+
+      // Find the admin by email
+      const labTech = await LabTech.findById({ _id: labTechId });
+      if (!labTech) {
+        return errorResMsg(res, 406, "LabTech does not exist");
+      }
+      // Find the patient by name
+      const patient = await Patient.findOne({ name: patientName });
+      if (!patient) {
+        return errorResMsg(res, 404, "Patient not found");
+      }
+  
+      // Find the doctor by name
+      const doctor = await Doctor.findOne({ name: doctorName });
+      if (!doctor) {
+        return errorResMsg(res, 404, "Doctor not found");
+      }
+  
+      // Create a new lab result
+      const newLabResult = new LabResult({
+        result,
+        dateReleased,
+        patientId: patient._id,
+        doctorId: doctor._id,
+        labTechId: labTech._id,
+      });
+  
+      // Save the lab result
+      const savedLabResult = await newLabResult.save();
+  
+      // Return success response
+      return successResMsg(res, 201, {
+        success: true,
+        labResult: savedLabResult,
+        message: "Lab Result added successfully",
       });
     } catch (error) {
       console.error(error);

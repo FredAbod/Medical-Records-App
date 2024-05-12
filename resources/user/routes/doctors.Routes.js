@@ -1,6 +1,6 @@
 import express from 'express';
 import { isAuthenticated } from '../../../middleware/isAuthenticated';
-import { addDiagnosis, addLabOrder, createDoctor, deleteDoctor, getAllDoctors, getDoctorByName, loginDoctor, updateDoctor } from '../controllers/doctors.Controller';
+import { addDiagnosis, addLabOrder, addPrescription, createDoctor, deleteDoctor, getAllDoctors, getDoctorByName, loginDoctor, updateDoctor } from '../controllers/doctors.Controller';
 const router = express.Router();
 
 // Add A Doctor
@@ -11,6 +11,9 @@ router.post('/login', loginDoctor);
 
 // Add Diagnosis
 router.post('/diagnosis',isAuthenticated, addDiagnosis);
+
+// Add Prescription
+router.post('/addPrescription',isAuthenticated, addPrescription);
 
 // Create A Lab Order
 router.post('/labOrder',isAuthenticated, addLabOrder);

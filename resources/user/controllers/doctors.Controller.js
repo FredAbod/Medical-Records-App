@@ -6,6 +6,7 @@ import Diagnosis from "../models/diagnosis.Models";
 import Doctor from "../models/doctors.Models";
 import LabTech from "../models/labTech.Models";
 import Patient from "../models/patient.Models";
+import Prescription from "../models/prescription.Models";
 
 
 export const createDoctor = async (req, res, next) => {
@@ -275,7 +276,11 @@ export const updateDoctor = async (req, res, next) => {
     try {
       const { diagnosis, dateDiagnosized, patientName } = req.body;
       const doctorId = req.user.doctorId;
-
+   // Find the admin by email
+   const doctor = await Doctor.findById({ _id: doctorId });
+   if (!doctor) {
+     return errorResMsg(res, 406, "Doctor does not exist");
+   }
       // Find the patient by name
       const patient = await Patient.findOne({ name: patientName });
       if (!patient) {
@@ -348,6 +353,58 @@ export const updateDoctor = async (req, res, next) => {
         success: true,
         labOrder: savedLabOrder,
         message: "Lab Order added successfully",
+      });
+    } catch (error) {
+      console.error(error);
+      return errorResMsg(res, 500, {
+        error: error.message,
+        message: "Internal server error",
+      });
+    }
+  };
+
+  export const addPrescription = async (req, res, next) => {
+    try {
+      const {
+        prescriptionName,
+        prescriptionDosage,
+        startDate,
+        endDate,
+        patientName,
+      } = req.body;
+  
+      
+      const doctorId = req.user.doctorId;
+      // Find the admin by email
+      const doctor = await Doctor.findById({ _id: doctorId });
+      if (!doctor) {
+        return errorResMsg(res, 406, "Doctor does not exist");
+      }
+  
+      // Find the patient by name
+      const patient = await Patient.findOne({ name: patientName });
+      if (!patient) {
+        return errorResMsg(res, 404, "Patient not found");
+      }
+  
+      // Create a new prescription
+      const newPrescription = new Prescription({
+        prescriptionName,
+        prescriptionDosage,
+        startDate,
+        endDate,
+        patientId: patient._id,
+        doctorId: doctor._id,
+      });
+  
+      // Save the prescription
+      const savedPrescription = await newPrescription.save();
+  
+      // Return success response
+      return successResMsg(res, 201, {
+        success: true,
+        prescription: savedPrescription,
+        message: "Prescription added successfully",
       });
     } catch (error) {
       console.error(error);

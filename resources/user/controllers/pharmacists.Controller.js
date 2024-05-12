@@ -2,6 +2,10 @@ import { createJwtToken } from "../../../middleware/isAuthenticated";
 import { passwordCompare, passwordHash } from "../../../utils/lib/bcrypt";
 import { errorResMsg, successResMsg } from "../../../utils/lib/response";
 import Admin from "../models/admin.Models";
+import Diagnosis from "../models/diagnosis.Models";
+import Doctor from "../models/doctors.Models";
+import MedicalHistory from "../models/medicalHistory.Models";
+import Patient from "../models/patient.Models";
 import Pharmacist from "../models/pharmacists.Models";
 
 
@@ -261,6 +265,102 @@ export const updatePharmacist = async (req, res, next) => {
         success: true,
         pharmacist: pharmacist,
         message: "Pharmacist logged in successfully",
+      });
+    } catch (error) {
+      console.error(error);
+      return errorResMsg(res, 500, {
+        error: error.message,
+        message: "Internal server error",
+      });
+    }
+  };
+
+  export const addMedicalHistory = async (req, res, next) => {
+    try {
+      const {
+        medicationName,
+        medicationDosage,
+        medicationDuration,
+        labResult,
+        patientName,
+        referringDoctorName,
+      } = req.body;
+      const pharmacistId = req.user.pharmacistId;
+
+    const pharmacist = await Pharmacist.findById({ _id: pharmacistId });
+    if (!pharmacist) {
+      return errorResMsg(res, 406, "Pharmacist does not exist");
+    }
+      // Find the patient by name
+      const patient = await Patient.findOne({ name: patientName });
+      if (!patient) {
+        return errorResMsg(res, 404, "Patient not found");
+      }
+  
+      // Find the referring doctor by name
+      const referringDoctor = await Doctor.findOne({ name: referringDoctorName });
+      if (!referringDoctor) {
+        return errorResMsg(res, 404, "Referring Doctor not found");
+      }
+  
+      // Find the diagnosis by name
+      const diagnosis = await Diagnosis.findOne({ patientId: patient._id });
+      if (!diagnosis) {
+        return errorResMsg(res, 404, "Diagnosis not found");
+      }
+  
+      // Create a new medical history
+      const newMedicalHistory = new MedicalHistory({
+        medicationName,
+        medicationDosage,
+        medicationDuration,
+        labResult,
+        patientID: patient._id,
+        referringDoctor: referringDoctor._id,
+        diagnosis: diagnosis._id,
+      });
+  
+      // Save the medical history
+      const savedMedicalHistory = await newMedicalHistory.save();
+  
+      // Return success response
+      return successResMsg(res, 201, {
+        success: true,
+        medicalHistory: savedMedicalHistory,
+        message: "Medical History added successfully",
+      });
+    } catch (error) {
+      console.error(error);
+      return errorResMsg(res, 500, {
+        error: error.message,
+        message: "Internal server error",
+      });
+    }
+  };
+
+  export const getMedicationHistory = async (req, res, next) => {
+    try {
+      const patientName = req.params.patientName;
+      const pharmacistId = req.user.pharmacistId;
+
+    const pharmacist = await Pharmacist.findById({ _id: pharmacistId });
+    if (!pharmacist) {
+      return errorResMsg(res, 406, "Pharmacist does not exist");
+    }
+      // Find the patient by name
+      const patient = await Patient.findOne({ name: patientName });
+      if (!patient) {
+        return errorResMsg(res, 404, "Patient not found");
+      }
+  
+      // Find the medication history for the patient
+      const medicationHistory = await MedicalHistory.find({ patientID: patient._id });
+  
+      // Return the medication history
+      return successResMsg(res, 200, {
+        success: true,
+        medicationHistory,
+        message: "Medication History retrieved successfully",
       });
     } catch (error) {
       console.error(error);

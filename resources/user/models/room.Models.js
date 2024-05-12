@@ -4,7 +4,8 @@ const roomSchema = new mongoose.Schema({
     roomNumber: { type: Number, required: true, unique: true },
     dateAssigned: { type: Date },
     patientId: {   type: mongoose.Schema.Types.ObjectId, ref: 'Patient' },
-    nurseId: {   type: mongoose.Schema.Types.ObjectId, ref: 'Nurse' }
+    nurseId: {   type: mongoose.Schema.Types.ObjectId, ref: 'Nurse' },
+    doctorId: {   type: mongoose.Schema.Types.ObjectId, ref: 'Doctor' }
 },
 {
   timestamps: true,

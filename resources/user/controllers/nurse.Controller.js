@@ -1,8 +1,10 @@
 import { passwordHash } from "../../../utils/lib/bcrypt";
 import { errorResMsg, successResMsg } from "../../../utils/lib/response";
 import Admin from "../models/admin.Models";
+import Doctor from "../models/doctors.Models";
 import Nurse from "../models/nurses.Models";
 import Patient from "../models/patient.Models";
+import Room from "../models/room.Models";
 
 export const createNurse = async (req, res, next) => {
   try {
@@ -274,7 +276,6 @@ export const addVitals = async (req, res, next) => {
       req.body;
     const nurseId = req.user.nurseId;
 
-    // Find the admin by email
     const nurse = await Nurse.findById({ _id: nurseId });
     if (!nurse) {
       return errorResMsg(res, 406, "Nurse does not exist");
@@ -338,6 +339,54 @@ export const admitPatient = async (req, res, next) => {
       success: true,
       vitals: patient,
       message: "Patient Admitted added successfully",
+    });
+  } catch (error) {
+    console.error(error);
+    return errorResMsg(res, 500, {
+      error: error.message,
+      message: "Internal server error",
+    });
+  }
+};
+
+export const assignRoom = async (req, res, next) => {
+  try {
+    const { roomNumber, patientName,doctorName } = req.body;
+    const nurseId = req.user.nurseId;
+
+    const nurse = await Nurse.findById({ _id: nurseId });
+    if (!nurse) {
+      return errorResMsg(res, 406, "Nurse does not exist");
+    }
+    // Find the patient by name
+    const patient = await Patient.findOne({ name: patientName });
+    if (!patient) {
+      return errorResMsg(res, 404, "Patient not found");
+    }
+
+    // Find the doctor by name
+    const doctor = await Doctor.findOne({ name: doctorName });
+    if (!doctor) {
+      return errorResMsg(res, 404, "Doctor not found");
+    }
+
+    // Create a new room assignment
+    const newRoomAssignment = new Room({
+      roomNumber,
+      dateAssigned: Date.now(),
+      patientId: patient._id,
+      nurseId: nurse._id,
+      doctorId: doctor._id,
+    });
+
+    // Save the room assignment
+    const savedRoomAssignment = await newRoomAssignment.save();
+
+    // Return success response
+    return successResMsg(res, 201, {
+      success: true,
+      roomAssignment: savedRoomAssignment,
+      message: "Room assigned successfully",
     });
   } catch (error) {
     console.error(error);

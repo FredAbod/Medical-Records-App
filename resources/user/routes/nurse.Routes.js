@@ -1,6 +1,6 @@
 import express from 'express';
 import { isAuthenticated } from '../../../middleware/isAuthenticated.js';
-import { addVitals, admitPatient, createNurse, deleteNurse, getAllNurses, getNurseByName, loginNurse, updateNurse } from '../controllers/nurse.Controller.js';
+import { addVitals, admitPatient, assignRoom, createNurse, deleteNurse, getAllNurses, getNurseByName, loginNurse, updateNurse } from '../controllers/nurse.Controller.js';
 const router = express.Router();
 
 
@@ -9,6 +9,9 @@ router.post('/addNurse',isAuthenticated, createNurse);
 
 // Add Vitals
 router.post('/addVitals',isAuthenticated, addVitals);
+
+// Assign Room
+router.post('/assignRoom',isAuthenticated, assignRoom);
 
 // Admit Patient
 router.post('/admitPatient',isAuthenticated, admitPatient);

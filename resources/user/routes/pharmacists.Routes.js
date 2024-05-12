@@ -1,11 +1,14 @@
 import express from 'express';
 import { isAuthenticated } from '../../../middleware/isAuthenticated';
-import { createPharmacist, deletePharmacist, getAllPharmacists, getPharmacistByName, loginPharmacist, updatePharmacist } from '../controllers/pharmacists.Controller';
+import { addMedicalHistory, createPharmacist, deletePharmacist, getAllPharmacists, getMedicationHistory, getPharmacistByName, loginPharmacist, updatePharmacist } from '../controllers/pharmacists.Controller';
 const router = express.Router();
 
 
 // Add A Pharmacist
 router.post('/addPharmacist',isAuthenticated, createPharmacist);
+
+// Add Medical History
+router.post('/addMedicalHistory',isAuthenticated, addMedicalHistory);
 
 // Login A Pharmacist
 router.post('/loginPharmacist', loginPharmacist);
@@ -18,6 +21,9 @@ router.delete('/deleteDoctor',isAuthenticated, deletePharmacist);
 
 // Get All Doctors
 router.get('/get',isAuthenticated, getAllPharmacists);
+
+// Get Medical History
+router.get('/getMedicationHistory',isAuthenticated, getMedicationHistory);
 
 // Get Doctor By Name
 router.get('/get',isAuthenticated, getPharmacistByName);
