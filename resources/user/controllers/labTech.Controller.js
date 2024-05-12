@@ -3,6 +3,7 @@ import { passwordCompare, passwordHash } from "../../../utils/lib/bcrypt.js";
 import { errorResMsg, successResMsg } from "../../../utils/lib/response.js";
 import Admin from "../models/admin.Models.js";
 import Doctor from "../models/doctors.Models.js";
+import labResult from "../models/labResult.Model.js";
 import LabTech from "../models/labTech.Models.js";
 import Patient from "../models/patient.Models.js";
 
@@ -253,7 +254,7 @@ export const createLabTech = async (req, res, next) => {
       }
   
       // Create a new lab result
-      const newLabResult = new LabResult({
+      const newLabResult = new labResult({
         result,
         dateReleased,
         patientId: patient._id,
