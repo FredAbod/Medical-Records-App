@@ -1,9 +1,9 @@
-import { passwordHash } from "../../../utils/lib/bcrypt";
-import { errorResMsg } from "../../../utils/lib/response";
-import Admin from "../models/admin.Models";
-import Doctor from "../models/doctors.Models";
-import LabTech from "../models/labTech.Models";
-import Patient from "../models/patient.Models";
+import { passwordHash } from "../../../utils/lib/bcrypt.js";
+import { errorResMsg } from "../../../utils/lib/response.js";
+import Admin from "../models/admin.Models.js";
+import Doctor from "../models/doctors.Models.js";
+import LabTech from "../models/labTech.Models.js";
+import Patient from "../models/patient.Models.js";
 
 
 

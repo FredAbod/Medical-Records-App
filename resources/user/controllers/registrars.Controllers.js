@@ -1,8 +1,8 @@
-import { createJwtToken } from "../../../middleware/isAuthenticated";
-import { passwordCompare, passwordHash } from "../../../utils/lib/bcrypt";
-import { errorResMsg, successResMsg } from "../../../utils/lib/response";
-import Admin from "../models/admin.Models";
-import Registrar from "../models/registrars.Models";
+import { createJwtToken } from "../../../middleware/isAuthenticated.js";
+import { passwordCompare, passwordHash } from "../../../utils/lib/bcrypt.js";
+import { errorResMsg, successResMsg } from "../../../utils/lib/response.js";
+import Admin from "../models/admin.Models.js";
+import Registrar from "../models/registrars.Models.js";
 
 
 

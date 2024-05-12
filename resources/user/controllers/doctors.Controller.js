@@ -1,12 +1,12 @@
-import { createJwtToken } from "../../../middleware/isAuthenticated";
-import { passwordCompare, passwordHash } from "../../../utils/lib/bcrypt";
-import { errorResMsg, successResMsg } from "../../../utils/lib/response";
-import Admin from "../models/admin.Models";
-import Diagnosis from "../models/diagnosis.Models";
-import Doctor from "../models/doctors.Models";
-import LabTech from "../models/labTech.Models";
-import Patient from "../models/patient.Models";
-import Prescription from "../models/prescription.Models";
+import { createJwtToken } from "../../../middleware/isAuthenticated.js";
+import { passwordCompare, passwordHash } from "../../../utils/lib/bcrypt.js";
+import { errorResMsg, successResMsg } from "../../../utils/lib/response.js";
+import Admin from "../models/admin.Models.js";
+import Diagnosis from "../models/diagnosis.Models.js";
+import Doctor from "../models/doctors.Models.js";
+import LabTech from "../models/labTech.Models.js";
+import Patient from "../models/patient.Models.js";
+import Prescription from "../models/prescription.Models.js";
 
 
 export const createDoctor = async (req, res, next) => {

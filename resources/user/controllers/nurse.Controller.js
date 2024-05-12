@@ -1,10 +1,10 @@
-import { passwordHash } from "../../../utils/lib/bcrypt";
-import { errorResMsg, successResMsg } from "../../../utils/lib/response";
-import Admin from "../models/admin.Models";
-import Doctor from "../models/doctors.Models";
-import Nurse from "../models/nurses.Models";
-import Patient from "../models/patient.Models";
-import Room from "../models/room.Models";
+import { passwordHash } from "../../../utils/lib/bcrypt.js";
+import { errorResMsg, successResMsg } from "../../../utils/lib/response.js";
+import Admin from "../models/admin.Models.js";
+import Doctor from "../models/doctors.Models.js";
+import Nurse from "../models/nurses.Models.js";
+import Patient from "../models/patient.Models.js";
+import Room from "../models/room.Models.js";
 
 export const createNurse = async (req, res, next) => {
   try {

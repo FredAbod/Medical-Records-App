@@ -1,6 +1,6 @@
 import express from 'express';
-import { isAuthenticated } from '../../../middleware/isAuthenticated';
-import { createRegistrar, deleteRegistrar, getAllRegistrars, getRegistrarByName, loginRegistrar, updateRegistrar } from '../controllers/registrars.Controllers';
+import { isAuthenticated } from '../../../middleware/isAuthenticated.js';
+import { createRegistrar, deleteRegistrar, getAllRegistrars, getRegistrarByName, loginRegistrar, updateRegistrar } from '../controllers/registrars.Controllers.js';
 const router = express.Router();
 
 // Add A Registrar

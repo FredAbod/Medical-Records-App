@@ -1,6 +1,6 @@
 import express from 'express';
-import { isAuthenticated } from '../../../middleware/isAuthenticated';
-import { addMedicalHistory, createPharmacist, deletePharmacist, getAllPharmacists, getMedicationHistory, getPharmacistByName, loginPharmacist, updatePharmacist } from '../controllers/pharmacists.Controller';
+import { isAuthenticated } from '../../../middleware/isAuthenticated.js';
+import { addMedicalHistory, createPharmacist, deletePharmacist, getAllPharmacists, getMedicationHistory, getPharmacistByName, loginPharmacist, updatePharmacist } from '../controllers/pharmacists.Controller.js';
 const router = express.Router();
 
 

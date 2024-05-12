@@ -1,6 +1,6 @@
 import express from 'express';
-import { createDoctor, deleteDoctor, updateDoctor } from '../controllers/doctors.Controller';
-import { addLabResult, createLabTech, deleteLabTech, loginLabTech, updateLabTech } from '../controllers/labTech.Controller';
+import { addLabResult, createLabTech, deleteLabTech, loginLabTech, updateLabTech } from '../controllers/labTech.Controller.js';
+import { isAuthenticated } from '../../../middleware/isAuthenticated.js';
 const router = express.Router();
 
 

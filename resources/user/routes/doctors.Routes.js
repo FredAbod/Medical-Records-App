@@ -1,6 +1,6 @@
 import express from 'express';
-import { isAuthenticated } from '../../../middleware/isAuthenticated';
-import { addDiagnosis, addLabOrder, addPrescription, createDoctor, deleteDoctor, getAllDoctors, getDoctorByName, loginDoctor, updateDoctor } from '../controllers/doctors.Controller';
+import { isAuthenticated } from '../../../middleware/isAuthenticated.js';
+import { addDiagnosis, addLabOrder, addPrescription, createDoctor, deleteDoctor, getAllDoctors, getDoctorByName, loginDoctor, updateDoctor } from '../controllers/doctors.Controller.js';
 const router = express.Router();
 
 // Add A Doctor
