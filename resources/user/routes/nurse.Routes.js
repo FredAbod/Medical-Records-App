@@ -20,7 +20,7 @@ router.post('/admitPatient',isAuthenticated, admitPatient);
 router.post('/loginNurse', loginNurse);
 
 // Update A Nurse
-router.post('/updateNurse',isAuthenticated, updateNurse);
+router.patch('/updateNurse/:id',isAuthenticated, updateNurse);
 
 // Delete A Nurse
 router.post('/deleteNurse',isAuthenticated, deleteNurse);

@@ -10,7 +10,7 @@ router.post('/addRegistrar',isAuthenticated, createRegistrar);
 router.post('/addRegistrar', loginRegistrar);
 
 // Update A Registrar Details
-router.patch('/updateRegistrar',isAuthenticated, updateRegistrar);
+router.patch('/updateRegistrar/:id',isAuthenticated, updateRegistrar);
 
 // Delete A Doctor Details
 router.patch('/deleteRegistrar',isAuthenticated, deleteRegistrar);

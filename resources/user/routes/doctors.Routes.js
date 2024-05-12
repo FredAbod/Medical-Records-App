@@ -19,7 +19,7 @@ router.post('/addPrescription',isAuthenticated, addPrescription);
 router.post('/labOrder',isAuthenticated, addLabOrder);
 
 // Update A Doctor Details
-router.patch('/updateDoctor',isAuthenticated, updateDoctor);
+router.patch('/updateDoctor/:id',isAuthenticated, updateDoctor);
 
 // Delete A Doctor Details
 router.delete('/deleteDoctor',isAuthenticated, deleteDoctor);

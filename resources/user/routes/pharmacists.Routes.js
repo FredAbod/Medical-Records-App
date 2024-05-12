@@ -14,7 +14,7 @@ router.post('/addMedicalHistory',isAuthenticated, addMedicalHistory);
 router.post('/loginPharmacist', loginPharmacist);
 
 // Update A Doctor Details
-router.patch('/updateDoctor',isAuthenticated, updatePharmacist);
+router.patch('/updateDoctor/:id',isAuthenticated, updatePharmacist);
 
 // Delete A Doctor Details
 router.delete('/deleteDoctor',isAuthenticated, deletePharmacist);

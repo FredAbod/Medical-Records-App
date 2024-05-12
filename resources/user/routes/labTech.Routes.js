@@ -14,7 +14,7 @@ router.post('/addLabResult',isAuthenticated, addLabResult);
 router.post('/loginLabTech', loginLabTech);
 
 // Update A Lab Tech Details
-router.patch('/updateLabTech',isAuthenticated, updateLabTech);
+router.patch('/updateLabTech/:id',isAuthenticated, updateLabTech);
 
 // Delete A Lab Techtor Details
 router.delete('/deleteLabTech',isAuthenticated, deleteLabTech);
