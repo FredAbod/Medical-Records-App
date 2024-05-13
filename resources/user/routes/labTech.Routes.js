@@ -10,8 +10,6 @@ router.post('/addLabTech',isAuthenticated, createLabTech);
 // Add A Lab Result
 router.post('/addLabResult',isAuthenticated, addLabResult);
 
-//Get Lab Order
-
 // Login A Lab Technician
 router.post('/loginLabTech', loginLabTech);
 
@@ -24,7 +22,7 @@ router.delete('/deleteLabTech',isAuthenticated, deleteLabTech);
 // Get All Patient For THe Day
 router.get('/getPatient',isAuthenticated, getAllPatientForDay);
 
-// Get All Patient For THe Day
+//Get Lab Order
 router.get('/getLabOrder',isAuthenticated, getLabOrdersByPatientName);
 
 export default router;

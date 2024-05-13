@@ -3,6 +3,7 @@ import { passwordCompare, passwordHash } from "../../../utils/lib/bcrypt.js";
 import { errorResMsg, successResMsg } from "../../../utils/lib/response.js";
 import Admin from "../models/admin.Models.js";
 import Doctor from "../models/doctors.Models.js";
+import MedicalHistory from "../models/medicalHistory.Models.js";
 import Nurse from "../models/nurses.Models.js";
 import Patient from "../models/patient.Models.js";
 import Room from "../models/room.Models.js";
@@ -427,6 +428,43 @@ export const getAllPatientForDay = async (req, res, next) => {
       success: true,
       patients,
       message: "Patients for the day retrieved successfully",
+    });
+  } catch (error) {
+    console.error(error);
+    return errorResMsg(res, 500, {
+      error: error.message,
+      message: "Internal server error",
+    });
+  }
+};
+export const getMedicalHistoryByPatientName = async (req, res, next) => {
+  try {
+    // Extract patient name from request body
+    const { patientName } = req.body;
+    const nurseId = req.user.nurseId;
+
+    const nurse = await Nurse.findById({ _id: nurseId });
+    if (!nurse) {
+      return errorResMsg(res, 406, "Nurse does not exist");
+    }
+
+
+    // Find the patient by name
+    const patient = await Patient.findOne({ name: patientName });
+
+    if (!patient) {
+      return errorResMsg(res, 404, {
+        message: "Patient not found",
+      });
+    }
+
+    // Find medical history for the patient
+    const medicalHistory = await MedicalHistory.find({ patientID: patient._id });
+
+    return successResMsg(res, 200, {
+      success: true,
+      medicalHistory,
+      message: "Medical history retrieved successfully",
     });
   } catch (error) {
     console.error(error);
