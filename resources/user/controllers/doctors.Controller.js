@@ -513,11 +513,11 @@ export const getLabResultByPatientName = async (req, res, next) => {
     }
 
     // Find lab orders for the patient
-    const labResult = await labResult.find({ patientId: patient._id });
+    const result = await labResult.find({ patientId: patient._id });
 
     return successResMsg(res, 200, {
       success: true,
-      labResult,
+      result,
       message: "Lab Results retrieved successfully",
     });
   } catch (error) {
