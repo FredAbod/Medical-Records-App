@@ -15,7 +15,7 @@ router.post("/create", createAdmin);
 router.post("/login", loginAdmin);
 
 // Get All Patients
-router.post("/get", getAllPatient);
+router.get("/get", getAllPatient);
 
 // Add A Patient
 router.post("/addPatient", isAuthenticated, createPatient);
