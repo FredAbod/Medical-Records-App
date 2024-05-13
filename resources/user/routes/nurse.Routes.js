@@ -31,10 +31,10 @@ router.get('/get',isAuthenticated, getAllNurses);
 // Get Nurse By Name
 router.get('/getNurseByName/:name',isAuthenticated, getNurseByName);
 
-// Get Patint
+// Get Pateint
 router.get('/getPatient',isAuthenticated, getAllPatientForDay);
 
-// Get Patint
-router.get('/getMed',isAuthenticated, getMedicalHistoryByPatientName);
+// Get Pateint
+router.get('/med',isAuthenticated, getMedicalHistoryByPatientName);
 
 export default router;
