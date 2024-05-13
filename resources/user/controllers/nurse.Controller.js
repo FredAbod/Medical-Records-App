@@ -399,3 +399,40 @@ export const assignRoom = async (req, res, next) => {
     });
   }
 };
+
+export const getAllPatientForDay = async (req, res, next) => {
+  try {
+      
+    const nurseId = req.user.nurseId;
+
+    const nurse = await Nurse.findById({ _id: nurseId });
+    if (!nurse) {
+      return errorResMsg(res, 406, "Nurse does not exist");
+    }
+
+    // Get today's date
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Set time to beginning of the day
+
+    // Set end of day
+    const endOfDay = new Date(today);
+    endOfDay.setHours(23, 59, 59, 999); // Set time to end of the day
+
+    // Find patients created between the start and end of today
+    const patients = await Patient.find({
+      createdAt: { $gte: today, $lte: endOfDay }
+    });
+
+    return successResMsg(res, 200, {
+      success: true,
+      patients,
+      message: "Patients for the day retrieved successfully",
+    });
+  } catch (error) {
+    console.error(error);
+    return errorResMsg(res, 500, {
+      error: error.message,
+      message: "Internal server error",
+    });
+  }
+};

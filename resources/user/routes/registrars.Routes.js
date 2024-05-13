@@ -1,6 +1,6 @@
 import express from 'express';
 import { isAuthenticated } from '../../../middleware/isAuthenticated.js';
-import { createRegistrar, deleteRegistrar, getAllRegistrars, getRegistrarByName, loginRegistrar, updateRegistrar } from '../controllers/registrars.Controllers.js';
+import { createRegistrar, deleteRegistrar, getAllPatient, getAllPatientForDay, getAllRegistrars, getMedicalHistoryByPatientName, getRegistrarByName, loginRegistrar, updateRegistrar } from '../controllers/registrars.Controllers.js';
 const router = express.Router();
 
 // Add A Registrar
@@ -19,6 +19,15 @@ router.patch('/deleteRegistrar',isAuthenticated, deleteRegistrar);
 router.get('/get',isAuthenticated, getAllRegistrars);
 
 // Get Registrars By Name
-router.get('/get',isAuthenticated, getRegistrarByName);
+router.get('/getByName/:name',isAuthenticated, getRegistrarByName);
+
+// Get Patient
+router.get('/getPatient',isAuthenticated, getAllPatientForDay);
+
+// Get Patient
+router.get('/getAllPatient',isAuthenticated, getAllPatient);
+
+// Get Medical History
+router.get('/getPatientMedicalHistory',isAuthenticated, getMedicalHistoryByPatientName);
 
 export default router;

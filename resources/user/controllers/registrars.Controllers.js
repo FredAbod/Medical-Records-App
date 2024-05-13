@@ -2,6 +2,8 @@ import { createJwtToken } from "../../../middleware/isAuthenticated.js";
 import { passwordCompare, passwordHash } from "../../../utils/lib/bcrypt.js";
 import { errorResMsg, successResMsg } from "../../../utils/lib/response.js";
 import Admin from "../models/admin.Models.js";
+import MedicalHistory from "../models/medicalHistory.Models.js";
+import Patient from "../models/patient.Models.js";
 import Registrar from "../models/registrars.Models.js";
 
 
@@ -256,6 +258,91 @@ export const createRegistrar = async (req, res, next) => {
         success: true,
         registrar: registrar,
         message: "Registrar logged in successfully",
+      });
+    } catch (error) {
+      console.error(error);
+      return errorResMsg(res, 500, {
+        error: error.message,
+        message: "Internal server error",
+      });
+    }
+  };
+
+  export const getAllPatientForDay = async (req, res, next) => {
+    try {
+        
+      const registrarId = req.user.registrarId;
+  
+      const registrar = await Registrar.findById({ _id: registrarId });
+      if (!registrar) {
+        return errorResMsg(res, 406, "Registrar does not exist");
+      }
+  
+      // Get today's date
+      const today = new Date();
+      today.setHours(0, 0, 0, 0); // Set time to beginning of the day
+  
+      // Set end of day
+      const endOfDay = new Date(today);
+      endOfDay.setHours(23, 59, 59, 999); // Set time to end of the day
+  
+      // Find patients created between the start and end of today
+      const patients = await Patient.find({
+        createdAt: { $gte: today, $lte: endOfDay }
+      });
+  
+      return successResMsg(res, 200, {
+        success: true,
+        patients,
+        message: "Patients for the day retrieved successfully",
+      });
+    } catch (error) {
+      console.error(error);
+      return errorResMsg(res, 500, {
+        error: error.message,
+        message: "Internal server error",
+      });
+    }
+  };
+  
+  export const getAllPatient = async (req, res, next) => {
+    try {
+      const doctors = await Patient.find();
+      return successResMsg(res, 200, {
+        success: true,
+        doctors,
+        message: "Patients retrieved successfully",
+      });
+    } catch (error) {
+      console.error(error);
+      return errorResMsg(res, 500, {
+        error: error.message,
+        message: "Internal server error",
+      });
+    }
+  };
+
+  export const getMedicalHistoryByPatientName = async (req, res, next) => {
+    try {
+      // Extract patient name from request body
+      const { patientName } = req.body;
+  
+      // Find the patient by name
+      const patient = await Patient.findOne({ name: patientName });
+  
+      if (!patient) {
+        return errorResMsg(res, 404, {
+          message: "Patient not found",
+        });
+      }
+  
+      // Find medical history for the patient
+      const medicalHistory = await MedicalHistory.find({ patientID: patient._id });
+  
+      return successResMsg(res, 200, {
+        success: true,
+        medicalHistory,
+        message: "Medical history retrieved successfully",
       });
     } catch (error) {
       console.error(error);

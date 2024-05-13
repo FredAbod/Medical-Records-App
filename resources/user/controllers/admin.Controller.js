@@ -180,3 +180,20 @@ export const loginAdmin = async (req, res, next) => {
       });
     }
   };
+
+  export const getAllPatient = async (req, res, next) => {
+    try {
+      const doctors = await Patient.find();
+      return successResMsg(res, 200, {
+        success: true,
+        doctors,
+        message: "Patients retrieved successfully",
+      });
+    } catch (error) {
+      console.error(error);
+      return errorResMsg(res, 500, {
+        error: error.message,
+        message: "Internal server error",
+      });
+    }
+  };
