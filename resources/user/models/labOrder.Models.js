@@ -1,18 +1,20 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
-const labOrderSchema = new mongoose.Schema({
+const labOrderSchema = new mongoose.Schema(
+  {
     testType: { type: String },
     // specimen: { type: String },
-    dateOrdered:Date.now(),
-    patientId: { type: mongoose.Schema.Types.ObjectId, ref: 'Patient' },
-    doctorId: { type: mongoose.Schema.Types.ObjectId, ref: 'Doctor' },
+    dateOrdered: { type: Date, default: Date.now },
+    patientId: { type: mongoose.Schema.Types.ObjectId, ref: "Patient" },
+    doctorId: { type: mongoose.Schema.Types.ObjectId, ref: "Doctor" },
     // labTechId: { type: mongoose.Schema.Types.ObjectId, ref: 'LabTech' }
-},
-{
-  timestamps: true,
-  versionKey: false,
-});
+  },
+  {
+    timestamps: true,
+    versionKey: false,
+  }
+);
 
-const LabOrder = mongoose.model('LabOrder', labOrderSchema);
+const LabOrder = mongoose.model("LabOrder", labOrderSchema);
 
 export default LabOrder;
