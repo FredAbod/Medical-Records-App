@@ -10,13 +10,13 @@ router.post('/addDoctor',isAuthenticated, createDoctor);
 router.post('/login', loginDoctor);
 
 // Add Diagnosis
-router.post('/diagnosis',isAuthenticated, addDiagnosis);
+router.post('/diagnosis/:id',isAuthenticated, addDiagnosis);
 
 // Add Prescription
-router.post('/addPrescription',isAuthenticated, addPrescription);
+router.post('/addPrescription/:patientId',isAuthenticated, addPrescription);
 
 // Create A Lab Order
-router.post('/labOrder',isAuthenticated, addLabOrder);
+router.post('/labOrder/:patientId',isAuthenticated, addLabOrder);
 
 // Update A Doctor Details
 router.patch('/updateDoctor/:id',isAuthenticated, updateDoctor);
