@@ -23,7 +23,7 @@ router.delete('/deleteDoctor',isAuthenticated, deletePharmacist);
 router.get('/get',isAuthenticated, getAllPharmacists);
 
 // Get Medical History
-router.get('/getMedicationHistory',isAuthenticated, getMedicationHistory);
+router.get('/getMedicationHistory/:patientId',isAuthenticated, getMedicationHistory);
 
 // Get Doctor By Name
 router.get('/get',isAuthenticated, getPharmacistByName);

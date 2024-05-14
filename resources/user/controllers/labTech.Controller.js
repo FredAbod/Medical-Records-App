@@ -281,14 +281,13 @@ export const createLabTech = async (req, res, next) => {
     }
   };
 
-  export const getLabOrdersByPatientName = async (req, res, next) => {
+  export const getLabOrdersByPatientId = async (req, res, next) => {
     try {
-      // Extract patient name from request body
-      const { patientName } = req.body;
-  
-      // Find the patient by name
-      const patient = await Patient.findOne({ name: patientName });
-  
+       // Extract patient ID from URL parameters
+       const { patientId } = req.params;
+       // Find the patient by ID
+       const patient = await Patient.findById(patientId).where({ status: "active" });
+   
       if (!patient) {
         return errorResMsg(res, 404, {
           message: "Patient not found",

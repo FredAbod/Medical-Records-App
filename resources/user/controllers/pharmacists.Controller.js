@@ -340,7 +340,7 @@ export const updatePharmacist = async (req, res, next) => {
 
   export const getMedicationHistory = async (req, res, next) => {
     try {
-      const patientName = req.params.patientName;
+      const patientId = req.params;
       const pharmacistId = req.user.pharmacistId;
 
     const pharmacist = await Pharmacist.findById({ _id: pharmacistId });
@@ -348,7 +348,7 @@ export const updatePharmacist = async (req, res, next) => {
       return errorResMsg(res, 406, "Pharmacist does not exist");
     }
       // Find the patient by name
-      const patient = await Patient.findOne({ name: patientName });
+      const patient = await Patient.findById(patientId);
       if (!patient) {
         return errorResMsg(res, 404, "Patient not found");
       }

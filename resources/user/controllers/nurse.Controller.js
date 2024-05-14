@@ -321,7 +321,7 @@ export const addVitals = async (req, res, next) => {
 };
 export const admitPatient = async (req, res, next) => {
   try {
-    const { patientName } =  req.body;
+    const { patientId } =  req.params;
     const nurseId = req.user.nurseId;
 
     // Find the admin by email
@@ -330,12 +330,12 @@ export const admitPatient = async (req, res, next) => {
       return errorResMsg(res, 406, "Nurse does not exist");
     }
     // Find the patient by name
-    const patient = await Patient.findOne({ name: patientName });
+    const patient = await Patient.findById(patientId);
     if (!patient) {
       return errorResMsg(res, 404, "Patient not found");
     }
 
-    patient.admitted = true;
+    patient.admitted = "active";
     await patient.save();
 
     // Return success response
@@ -440,7 +440,9 @@ export const getAllPatientForDay = async (req, res, next) => {
 export const getMedicalHistoryByPatientName = async (req, res, next) => {
   try {
     // Extract patient name from request body
-    const { patientName } = req.body;
+    // Extract patient ID from URL parameters
+    const { patientId } = req.params;
+
     const nurseId = req.user.nurseId;
 
     const nurse = await Nurse.findById({ _id: nurseId });
@@ -449,8 +451,8 @@ export const getMedicalHistoryByPatientName = async (req, res, next) => {
     }
 
 
-    // Find the patient by name
-    const patient = await Patient.findOne({ name: patientName });
+    // Find the patient by ID
+    const patient = await Patient.findById(patientId).where({ status: "active" });
 
     if (!patient) {
       return errorResMsg(res, 404, {
@@ -465,6 +467,33 @@ export const getMedicalHistoryByPatientName = async (req, res, next) => {
       success: true,
       medicalHistory,
       message: "Medical history retrieved successfully",
+    });
+  } catch (error) {
+    console.error(error);
+    return errorResMsg(res, 500, {
+      error: error.message,
+      message: "Internal server error",
+    });
+  }
+};
+
+export const getPatientById = async (req, res, next) => {
+  try {
+    // Extract patient ID from URL parameters
+    const { patientId } = req.params;
+    // Find the patient by ID
+    const patient = await Patient.findById(patientId).where({ status: "active" });
+
+    if (!patient) {
+      return errorResMsg(res, 404, {
+        message: "Patient not found",
+      });
+    }
+
+    return successResMsg(res, 200, {
+      success: true,
+      patient,
+      message: "Patient retrieved successfully",
     });
   } catch (error) {
     console.error(error);

@@ -1,6 +1,6 @@
 import express from 'express';
 import { isAuthenticated } from '../../../middleware/isAuthenticated.js';
-import { addVitals, admitPatient, assignRoom, createNurse, deleteNurse, getAllNurses, getAllPatientForDay, getMedicalHistoryByPatientName, getNurseByName, loginNurse, updateNurse } from '../controllers/nurse.Controller.js';
+import { addVitals, admitPatient, assignRoom, createNurse, deleteNurse, getAllNurses, getAllPatientForDay, getMedicalHistoryByPatientName, getNurseByName, getPatientById, loginNurse, updateNurse } from '../controllers/nurse.Controller.js';
 const router = express.Router();
 
 
@@ -14,7 +14,7 @@ router.post('/addVitals',isAuthenticated, addVitals);
 router.post('/assignRoom',isAuthenticated, assignRoom);
 
 // Admit Patient
-router.post('/admitPatient',isAuthenticated, admitPatient);
+router.post('/admitPatient/Id',isAuthenticated, admitPatient);
 
 // Add A Nurse
 router.post('/loginNurse', loginNurse);
@@ -35,6 +35,9 @@ router.get('/getNurseByName/:name',isAuthenticated, getNurseByName);
 router.get('/getPatient',isAuthenticated, getAllPatientForDay);
 
 // Get Pateint
-router.get('/med',isAuthenticated, getMedicalHistoryByPatientName);
+router.get('/getPatientById/:patientId',isAuthenticated, getPatientById);
+
+// Get Pateint
+router.get('/med/:patienId',isAuthenticated, getMedicalHistoryByPatientName);
 
 export default router;

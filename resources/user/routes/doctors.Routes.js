@@ -1,6 +1,6 @@
 import express from 'express';
 import { isAuthenticated } from '../../../middleware/isAuthenticated.js';
-import { addDiagnosis, addLabOrder, addPrescription, createDoctor, deleteDoctor, getAllDoctors, getAllPatientForDay, getDoctorByName, getLabResultByPatientName, getMedicalHistoryByPatientName, loginDoctor, updateDoctor } from '../controllers/doctors.Controller.js';
+import { addDiagnosis, addLabOrder, addPrescription, createDoctor, deleteDoctor, getAllDoctors, getAllPatientForDay, getDoctorByName, getLabResultByPatientId, getLabResultByPatientName, getMedicalHistoryByPatientId, getMedicalHistoryByPatientName, loginDoctor, updateDoctor } from '../controllers/doctors.Controller.js';
 const router = express.Router();
 
 // Add A Doctor
@@ -34,9 +34,9 @@ router.get('/getByName/:name',isAuthenticated, getDoctorByName);
 router.get('/patient',isAuthenticated, getAllPatientForDay);
 
 // Get Medical History
-router.get('/getPatientMedicalHistory',isAuthenticated, getMedicalHistoryByPatientName);
+router.get('/getPatientMedicalHistory/:patientId',isAuthenticated, getMedicalHistoryByPatientId);
 
 // Get Lab Result
-router.get('/getPatienLabResult',isAuthenticated, getLabResultByPatientName);
+router.get('/getPatienLabResult/patientId',isAuthenticated, getLabResultByPatientId);
 
 export default router;

@@ -1,5 +1,5 @@
 import express from 'express';
-import { addLabResult, createLabTech, deleteLabTech, getAllPatientForDay, getLabOrdersByPatientName, loginLabTech, updateLabTech } from '../controllers/labTech.Controller.js';
+import { addLabResult, createLabTech, deleteLabTech, getAllPatientForDay, getLabOrdersByPatientId, getLabOrdersByPatientName, loginLabTech, updateLabTech } from '../controllers/labTech.Controller.js';
 import { isAuthenticated } from '../../../middleware/isAuthenticated.js';
 const router = express.Router();
 
@@ -23,6 +23,6 @@ router.delete('/deleteLabTech',isAuthenticated, deleteLabTech);
 router.get('/getPatient',isAuthenticated, getAllPatientForDay);
 
 //Get Lab Order
-router.get('/getLabOrder',isAuthenticated, getLabOrdersByPatientName);
+router.get('/getLabOrder/:patientId',isAuthenticated, getLabOrdersByPatientId);
 
 export default router;

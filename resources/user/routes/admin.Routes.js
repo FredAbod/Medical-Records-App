@@ -3,6 +3,7 @@ import {
   createAdmin,
   createPatient,
   getAllPatient,
+  getPatientById,
   loginAdmin,
 } from "../controllers/admin.Controller.js";
 import { isAuthenticated } from "../../../middleware/isAuthenticated.js";
@@ -16,6 +17,9 @@ router.post("/login", loginAdmin);
 
 // Get All Patients
 router.get("/get", getAllPatient);
+
+// Get All PatientsById
+router.get("/get/:patientId", getPatientById);
 
 // Add A Patient
 router.post("/addPatient", isAuthenticated, createPatient);

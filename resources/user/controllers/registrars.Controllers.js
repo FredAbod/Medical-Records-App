@@ -322,13 +322,13 @@ export const createRegistrar = async (req, res, next) => {
     }
   };
 
-  export const getMedicalHistoryByPatientName = async (req, res, next) => {
+  export const getMedicalHistoryByPatientId = async (req, res, next) => {
     try {
       // Extract patient name from request body
-      const { patientName } = req.body;
+      const { patientId } = req.params;
   
       // Find the patient by name
-      const patient = await Patient.findOne({ name: patientName });
+      const patient = await Patient.findById(patientId);
   
       if (!patient) {
         return errorResMsg(res, 404, {
@@ -343,6 +343,33 @@ export const createRegistrar = async (req, res, next) => {
         success: true,
         medicalHistory,
         message: "Medical history retrieved successfully",
+      });
+    } catch (error) {
+      console.error(error);
+      return errorResMsg(res, 500, {
+        error: error.message,
+        message: "Internal server error",
+      });
+    }
+  };
+
+  export const getPatientById = async (req, res, next) => {
+    try {
+      // Extract patient ID from URL parameters
+      const { patientId } = req.params;
+      // Find the patient by ID
+      const patient = await Patient.findById(patientId);
+  
+      if (!patient) {
+        return errorResMsg(res, 404, {
+          message: "Patient not found",
+        });
+      }
+  
+      return successResMsg(res, 200, {
+        success: true,
+        patient,
+        message: "Patient retrieved successfully",
       });
     } catch (error) {
       console.error(error);

@@ -1,6 +1,8 @@
 import express from "express";
 import morgan from "morgan";
+import cors from "cors";
 const app = express();
+
 import adminRoute from "./resources/user/routes/admin.Routes.js";
 import registrarRoute from "./resources/user/routes/registrars.Routes.js";
 import pharmacistRoute from "./resources/user/routes/pharmacists.Routes.js";
@@ -11,6 +13,7 @@ import doctorsRoute from "./resources/user/routes/doctors.Routes.js";
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
 app.get("/", (req, res) => {
   res.send("Welcome to The Medical App ");

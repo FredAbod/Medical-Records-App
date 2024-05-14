@@ -455,11 +455,10 @@ export const getAllPatientForDay = async (req, res, next) => {
     });
   }
 };
-
-export const getMedicalHistoryByPatientName = async (req, res, next) => {
+export const getMedicalHistoryByPatientId = async (req, res, next) => {
   try {
-    // Extract patient name from request body
-    const { patientName } = req.body;
+    // Extract patient ID from URL parameters
+    const { patientId } = req.params;
     const doctorId = req.user.doctorId;
     // Find the admin by email
     const doctor = await Doctor.findById({ _id: doctorId });
@@ -467,8 +466,8 @@ export const getMedicalHistoryByPatientName = async (req, res, next) => {
       return errorResMsg(res, 406, "Doctor does not exist");
     }
 
-    // Find the patient by name
-    const patient = await Patient.findOne({ name: patientName });
+    // Find the patient by ID
+    const patient = await Patient.findById(patientId).where({ status: "active" });
 
     if (!patient) {
       return errorResMsg(res, 404, {
@@ -492,10 +491,11 @@ export const getMedicalHistoryByPatientName = async (req, res, next) => {
     });
   }
 };
-export const getLabResultByPatientName = async (req, res, next) => {
+
+export const getLabResultByPatientId = async (req, res, next) => {
   try {
-    // Extract patient name from request body
-    const { patientName } = req.body;
+    // Extract patient ID from URL parameters
+    const { patientId } = req.params;
     const doctorId = req.user.doctorId;
     // Find the admin by email
     const doctor = await Doctor.findById({ _id: doctorId });
@@ -503,8 +503,8 @@ export const getLabResultByPatientName = async (req, res, next) => {
       return errorResMsg(res, 406, "Doctor does not exist");
     }
 
-    // Find the patient by name
-    const patient = await Patient.findOne({ name: patientName });
+    // Find the patient by ID
+    const patient = await Patient.findById(patientId).where({ status: "active" });
 
     if (!patient) {
       return errorResMsg(res, 404, {
@@ -519,6 +519,33 @@ export const getLabResultByPatientName = async (req, res, next) => {
       success: true,
       result,
       message: "Lab Results retrieved successfully",
+    });
+  } catch (error) {
+    console.error(error);
+    return errorResMsg(res, 500, {
+      error: error.message,
+      message: "Internal server error",
+    });
+  }
+};
+
+export const getPatientById = async (req, res, next) => {
+  try {
+    // Extract patient ID from URL parameters
+    const { patientId } = req.params;
+    // Find the patient by ID
+    const patient = await Patient.findById(patientId).where({ status: "active" });
+
+    if (!patient) {
+      return errorResMsg(res, 404, {
+        message: "Patient not found",
+      });
+    }
+
+    return successResMsg(res, 200, {
+      success: true,
+      patient,
+      message: "Patient retrieved successfully",
     });
   } catch (error) {
     console.error(error);

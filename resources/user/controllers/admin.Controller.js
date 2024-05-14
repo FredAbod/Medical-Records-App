@@ -198,4 +198,29 @@ export const loginAdmin = async (req, res, next) => {
     }
   };
 
+  export const getPatientById = async (req, res, next) => {
+    try {
+      // Extract patient ID from URL parameters
+      const { patientId } = req.params;
+      // Find the patient by ID
+      const patient = await Patient.findById(patientId);
   
+      if (!patient) {
+        return errorResMsg(res, 404, {
+          message: "Patient not found",
+        });
+      }
+  
+      return successResMsg(res, 200, {
+        success: true,
+        patient,
+        message: "Patient retrieved successfully",
+      });
+    } catch (error) {
+      console.error(error);
+      return errorResMsg(res, 500, {
+        error: error.message,
+        message: "Internal server error",
+      });
+    }
+  };
