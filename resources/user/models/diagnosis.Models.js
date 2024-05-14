@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const diagnosisSchema = new mongoose.Schema(
   {
     diagnosis: { type: String },
-    dateDiagnosized: { type: Date },
+    dateDiagnosized: Date.now(),
     patientId: { type: mongoose.Schema.Types.ObjectId, ref: "Patient" },
     doctorId: { type: mongoose.Schema.Types.ObjectId, ref: "Doctor" },
   },

@@ -277,7 +277,8 @@ export const updateDoctor = async (req, res, next) => {
 
   export const addDiagnosis = async (req, res, next) => {
     try {
-      const { diagnosis, dateDiagnosized, patientName } = req.body;
+      const { diagnosis} = req.body;
+      const { patientId } = req.params;
       const doctorId = req.user.doctorId;
    // Find the admin by email
    const doctor = await Doctor.findById({ _id: doctorId });
@@ -285,7 +286,7 @@ export const updateDoctor = async (req, res, next) => {
      return errorResMsg(res, 406, "Doctor does not exist");
    }
       // Find the patient by name
-      const patient = await Patient.findOne({ name: patientName });
+      const patient = await Patient.findById(patientId);
       if (!patient) {
         return errorResMsg(res, 404, "Patient not found");
       }
@@ -293,7 +294,6 @@ export const updateDoctor = async (req, res, next) => {
       // Create a new diagnosis
       const newDiagnosis = new Diagnosis({
         diagnosis,
-        dateDiagnosized,
         patientId: patient._id,
         doctorId: doctorId,
       });
@@ -318,7 +318,9 @@ export const updateDoctor = async (req, res, next) => {
 
   export const addLabOrder = async (req, res, next) => {
     try {
-      const { testType, specimen, dateOrdered, patientName, labTechName } = req.body;
+      // const { testType, specimen, dateOrdered, patientName, labTechName } = req.body;
+      const { testType} = req.body;
+      const {patientId} = req.params;
       const doctorId = req.user.doctorId;
 
          // Find the admin by email
@@ -327,16 +329,16 @@ export const updateDoctor = async (req, res, next) => {
            return errorResMsg(res, 406, "Doctor does not exist");
          }
       // Find the patient by name
-      const patient = await Patient.findOne({ name: patientName });
+      const patient = await Patient.findById(patientId);
       if (!patient) {
         return errorResMsg(res, 404, "Patient not found");
       }
   
-      // Find the lab technician by name
-      const labTech = await LabTech.findOne({ name: labTechName });
-      if (!labTech) {
-        return errorResMsg(res, 404, "Lab Technician not found");
-      }
+      // // Find the lab technician by name
+      // const labTech = await LabTech.findOne({ name: labTechName });
+      // if (!labTech) {
+      //   return errorResMsg(res, 404, "Lab Technician not found");
+      // }
   
       // Create a new lab order
       const newLabOrder = new LabOrder({
@@ -345,7 +347,7 @@ export const updateDoctor = async (req, res, next) => {
         dateOrdered,
         patientId: patient._id,
         doctorId: doctorId,
-        labTechId: labTech._id,
+        // labTechId: labTech._id,
       });
   
       // Save the lab order
@@ -368,14 +370,19 @@ export const updateDoctor = async (req, res, next) => {
 
   export const addPrescription = async (req, res, next) => {
     try {
-      const {
-        prescriptionName,
-        prescriptionDosage,
-        startDate,
-        endDate,
-        patientName,
-      } = req.body;
+      // const {
+      //   prescriptionName,
+      //   prescriptionDosage,
+      //   startDate,
+      //   endDate,
+      //   patientName,
+      // } = req.body;
   
+      const {
+        prescriptionName
+      } = req.body;
+      const {patientId} = req.params;
+
       
       const doctorId = req.user.doctorId;
       // Find the admin by email
@@ -385,7 +392,7 @@ export const updateDoctor = async (req, res, next) => {
       }
   
       // Find the patient by name
-      const patient = await Patient.findOne({ name: patientName });
+      const patient = await Patient.findOne(patientId);
       if (!patient) {
         return errorResMsg(res, 404, "Patient not found");
       }
@@ -393,9 +400,9 @@ export const updateDoctor = async (req, res, next) => {
       // Create a new prescription
       const newPrescription = new Prescription({
         prescriptionName,
-        prescriptionDosage,
-        startDate,
-        endDate,
+        // prescriptionDosage,
+        // startDate,
+        // endDate,
         patientId: patient._id,
         doctorId: doctor._id,
       });
