@@ -37,6 +37,6 @@ router.get('/patient',isAuthenticated, getAllPatientForDay);
 router.get('/getPatientMedicalHistory/:patientId',isAuthenticated, getMedicalHistoryByPatientId);
 
 // Get Lab Result
-router.get('/getPatienLabResult/patientId',isAuthenticated, getLabResultByPatientId);
+router.get('/getPatienLabResult/:patientId',isAuthenticated, getLabResultByPatientId);
 
 export default router;
