@@ -14,7 +14,7 @@ router.post('/addVitals',isAuthenticated, addVitals);
 router.post('/assignRoom',isAuthenticated, assignRoom);
 
 // Admit Patient
-router.post('/admitPatient/Id',isAuthenticated, admitPatient);
+router.post('/admitPatient/:patientId',isAuthenticated, admitPatient);
 
 // Add A Nurse
 router.post('/loginNurse', loginNurse);
