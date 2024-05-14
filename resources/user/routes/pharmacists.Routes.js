@@ -5,7 +5,7 @@ const router = express.Router();
 
 
 // Add A Pharmacist
-router.post('/addPharmacist',isAuthenticated, createPharmacist);
+router.post('/addPharmacist', createPharmacist);
 
 // Add Medical History
 router.post('/addMedicalHistory',isAuthenticated, addMedicalHistory);

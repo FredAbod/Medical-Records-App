@@ -4,7 +4,7 @@ import { createRegistrar, deleteRegistrar, getAllPatient, getAllPatientForDay, g
 const router = express.Router();
 
 // Add A Registrar
-router.post('/addRegistrar',isAuthenticated, createRegistrar);
+router.post('/addRegistrar', createRegistrar);
 
 // Login A Registrar
 router.post('/login', loginRegistrar);

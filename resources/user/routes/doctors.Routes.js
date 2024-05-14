@@ -4,7 +4,7 @@ import { addDiagnosis, addLabOrder, addPrescription, createDoctor, deleteDoctor,
 const router = express.Router();
 
 // Add A Doctor
-router.post('/addDoctor',isAuthenticated, createDoctor);
+router.post('/addDoctor', createDoctor);
 
 // Login A Doctor
 router.post('/login', loginDoctor);

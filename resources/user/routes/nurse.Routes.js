@@ -5,7 +5,7 @@ const router = express.Router();
 
 
 // Add A Nurse
-router.post('/addNurse',isAuthenticated, createNurse);
+router.post('/addNurse', createNurse);
 
 // Add Vitals
 router.post('/addVitals',isAuthenticated, addVitals);

@@ -24,13 +24,13 @@ export const createRegistrar = async (req, res, next) => {
         nextOfKinPhoneNumber,
         password,
       } = req.body;
-      const adminId = req.user.adminId;
+      // const adminId = req.user.adminId;
   
-      // Find the admin by email
-      const admin = await Admin.findById({ _id: adminId });
-      if (!admin) {
-        return errorResMsg(res, 406, "Admin does not exist");
-      }
+      // // Find the admin by email
+      // const admin = await Admin.findById({ _id: adminId });
+      // if (!admin) {
+      //   return errorResMsg(res, 406, "Admin does not exist");
+      // }
       // Check if required fields are provided
       if (
         !name ||

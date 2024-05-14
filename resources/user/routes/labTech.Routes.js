@@ -5,7 +5,7 @@ const router = express.Router();
 
 
 // Add A Lab Technician
-router.post('/addLabTech',isAuthenticated, createLabTech);
+router.post('/addLabTech',createLabTech);
 
 // Add A Lab Result
 router.post('/addLabResult',isAuthenticated, addLabResult);
