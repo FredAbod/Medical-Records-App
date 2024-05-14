@@ -228,13 +228,13 @@ export const loginAdmin = async (req, res, next) => {
   export const activatePatientsStatus = async (req, res, next) => {
     try {
       const { patientId } =  req.params;
-      const nurseId = req.user.nurseId;
+      // const nurseId = req.user.nurseId;
   
-      // Find the admin by email
-      const nurse = await Nurse.findById({ _id: nurseId });
-      if (!nurse) {
-        return errorResMsg(res, 406, "Nurse does not exist");
-      }
+      // // Find the admin by email
+      // const nurse = await Nurse.findById({ _id: nurseId });
+      // if (!nurse) {
+      //   return errorResMsg(res, 406, "Nurse does not exist");
+      // }
       // Find the patient by name
       const patient = await Patient.findById(patientId);
       if (!patient) {
@@ -261,13 +261,13 @@ export const loginAdmin = async (req, res, next) => {
   export const deActivatePatientsStatus = async (req, res, next) => {
     try {
       const { patientId } =  req.params;
-      const nurseId = req.user.nurseId;
+      // const nurseId = req.user.nurseId;
   
-      // Find the admin by email
-      const nurse = await Nurse.findById({ _id: nurseId });
-      if (!nurse) {
-        return errorResMsg(res, 406, "Nurse does not exist");
-      }
+      // // Find the admin by email
+      // const nurse = await Nurse.findById({ _id: nurseId });
+      // if (!nurse) {
+      //   return errorResMsg(res, 406, "Nurse does not exist");
+      // }
       // Find the patient by name
       const patient = await Patient.findById(patientId);
       if (!patient) {
