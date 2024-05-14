@@ -1,6 +1,6 @@
 import express from 'express';
 import { isAuthenticated } from '../../../middleware/isAuthenticated.js';
-import { addVitals, admitPatient, assignRoom, createNurse, deleteNurse, getAllNurses, getAllPatientForDay, getMedicalHistoryByPatientName, getNurseByName, getPatientById, loginNurse, updateNurse } from '../controllers/nurse.Controller.js';
+import { addVitals, admitPatient, assignRoom, createNurse, deleteNurse, getAllNurses, getAllPatientForDay, getMedicalHistoryByPatientId, getNurseByName, getPatientById, loginNurse, updateNurse } from '../controllers/nurse.Controller.js';
 const router = express.Router();
 
 
@@ -38,6 +38,6 @@ router.get('/getPatient',isAuthenticated, getAllPatientForDay);
 router.get('/getPatientById/:patientId',isAuthenticated, getPatientById);
 
 // Get Pateint
-router.get('/med/:patienId',isAuthenticated, getMedicalHistoryByPatientName);
+router.get('/med/:patienId', getMedicalHistoryByPatientId);
 
 export default router;

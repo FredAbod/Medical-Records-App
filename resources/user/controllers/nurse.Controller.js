@@ -437,18 +437,18 @@ export const getAllPatientForDay = async (req, res, next) => {
     });
   }
 };
-export const getMedicalHistoryByPatientName = async (req, res, next) => {
+export const getMedicalHistoryByPatientId = async (req, res, next) => {
   try {
     // Extract patient name from request body
     // Extract patient ID from URL parameters
     const { patientId } = req.params;
 
-    const nurseId = req.user.nurseId;
+    // const nurseId = req.user.nurseId;
 
-    const nurse = await Nurse.findById({ _id: nurseId });
-    if (!nurse) {
-      return errorResMsg(res, 406, "Nurse does not exist");
-    }
+    // const nurse = await Nurse.findById({ _id: nurseId });
+    // if (!nurse) {
+    //   return errorResMsg(res, 406, "Nurse does not exist");
+    // }
 
 
     // Find the patient by ID
