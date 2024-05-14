@@ -1,6 +1,6 @@
 import express from 'express';
 import { isAuthenticated } from '../../../middleware/isAuthenticated.js';
-import { createRegistrar, deleteRegistrar, getAllPatient, getAllPatientForDay, getAllRegistrars, getMedicalHistoryByPatientId, getMedicalHistoryByPatientName, getPatientById, getRegistrarByName, loginRegistrar, updateRegistrar } from '../controllers/registrars.Controllers.js';
+import { createRegistrar, deleteRegistrar, getAllPatient, getAllPatientForDay, getAllRegistrars, getMedicalHistoryByPatientId, getPatientById, getRegistrarByName, loginRegistrar, updateRegistrar } from '../controllers/registrars.Controllers.js';
 const router = express.Router();
 
 // Add A Registrar

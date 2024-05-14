@@ -1,6 +1,6 @@
 import express from 'express';
 import { isAuthenticated } from '../../../middleware/isAuthenticated.js';
-import { addDiagnosis, addLabOrder, addPrescription, createDoctor, deleteDoctor, getAllDoctors, getAllPatientForDay, getDoctorByName, getLabResultByPatientId, getLabResultByPatientName, getMedicalHistoryByPatientId, getMedicalHistoryByPatientName, loginDoctor, updateDoctor } from '../controllers/doctors.Controller.js';
+import { addDiagnosis, addLabOrder, addPrescription, createDoctor, deleteDoctor, getAllDoctors, getAllPatientForDay, getDoctorByName, getLabResultByPatientId,  getMedicalHistoryByPatientId, loginDoctor, updateDoctor } from '../controllers/doctors.Controller.js';
 const router = express.Router();
 
 // Add A Doctor
