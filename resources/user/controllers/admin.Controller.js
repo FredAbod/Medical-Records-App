@@ -224,3 +224,70 @@ export const loginAdmin = async (req, res, next) => {
       });
     }
   };
+
+  export const activatePatientsStatus = async (req, res, next) => {
+    try {
+      const { patientId } =  req.params;
+      const nurseId = req.user.nurseId;
+  
+      // Find the admin by email
+      const nurse = await Nurse.findById({ _id: nurseId });
+      if (!nurse) {
+        return errorResMsg(res, 406, "Nurse does not exist");
+      }
+      // Find the patient by name
+      const patient = await Patient.findById(patientId);
+      if (!patient) {
+        return errorResMsg(res, 404, "Patient not found");
+      }
+  
+      patient.admitted = "active";
+      await patient.save();
+  
+      // Return success response
+      return successResMsg(res, 200, {
+        success: true,
+        vitals: patient,
+        message: "Patient Admitted successfully",
+      });
+    } catch (error) {
+      console.error(error);
+      return errorResMsg(res, 500, {
+        error: error.message,
+        message: "Internal server error",
+      });
+    }
+  };
+  export const deActivatePatientsStatus = async (req, res, next) => {
+    try {
+      const { patientId } =  req.params;
+      const nurseId = req.user.nurseId;
+  
+      // Find the admin by email
+      const nurse = await Nurse.findById({ _id: nurseId });
+      if (!nurse) {
+        return errorResMsg(res, 406, "Nurse does not exist");
+      }
+      // Find the patient by name
+      const patient = await Patient.findById(patientId);
+      if (!patient) {
+        return errorResMsg(res, 404, "Patient not found");
+      }
+  
+      patient.admitted = "closed";
+      await patient.save();
+  
+      // Return success response
+      return successResMsg(res, 200, {
+        success: true,
+        vitals: patient,
+        message: "Patient Admitted successfully",
+      });
+    } catch (error) {
+      console.error(error);
+      return errorResMsg(res, 500, {
+        error: error.message,
+        message: "Internal server error",
+      });
+    }
+  };
