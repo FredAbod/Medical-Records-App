@@ -370,17 +370,17 @@ export const updateDoctor = async (req, res, next) => {
 
   export const addPrescription = async (req, res, next) => {
     try {
-      // const {
-      //   prescriptionName,
-      //   prescriptionDosage,
-      //   startDate,
-      //   endDate,
-      //   patientName,
-      // } = req.body;
-  
       const {
-        prescriptionName
+        prescriptionName,
+        prescriptionDosage,
+        startDate,
+        endDate,
+        patientName,
       } = req.body;
+  
+      // const {
+      //   prescriptionName
+      // } = req.body;
       const {patientId} = req.params;
 
       
@@ -392,7 +392,7 @@ export const updateDoctor = async (req, res, next) => {
       }
   
       // Find the patient by name
-      const patient = await Patient.findOne(patientId);
+      const patient = await Patient.findById(patientId);
       if (!patient) {
         return errorResMsg(res, 404, "Patient not found");
       }
@@ -400,9 +400,10 @@ export const updateDoctor = async (req, res, next) => {
       // Create a new prescription
       const newPrescription = new Prescription({
         prescriptionName,
-        // prescriptionDosage,
-        // startDate,
-        // endDate,
+        prescriptionDosage,
+        startDate,
+        endDate,
+        patientName,
         patientId: patient._id,
         doctorId: doctor._id,
       });

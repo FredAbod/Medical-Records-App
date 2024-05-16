@@ -8,6 +8,7 @@ import Nurse from "../models/nurses.Models.js";
 import Patient from "../models/patient.Models.js";
 import Pharmacist from "../models/pharmacists.Models.js";
 import Registrar from "../models/registrars.Models.js";
+import Vitals from "../models/vitals.Models.js";
 
 export const createAdmin = async (req, res, next) => {
   try {
@@ -204,7 +205,7 @@ export const loginAdmin = async (req, res, next) => {
       const { patientId } = req.params;
       // Find the patient by ID
       const patient = await Patient.findById(patientId);
-  
+      const vitals = await Vitals.findOne({patientId: patient._id})
       if (!patient) {
         return errorResMsg(res, 404, {
           message: "Patient not found",
@@ -213,7 +214,7 @@ export const loginAdmin = async (req, res, next) => {
   
       return successResMsg(res, 200, {
         success: true,
-        patient,
+        data: {patient, vitals},
         message: "Patient retrieved successfully",
       });
     } catch (error) {
