@@ -28,7 +28,7 @@ router.post("/deactivate/:patientId", deActivatePatientsStatus);
 router.get("/get", getAllPatient);
 
 // Get All Active Patients
-router.get("/get", getAllActivePatients);
+router.get("/getActivePatients", getAllActivePatients);
 
 // Get All PatientsById
 router.get("/get/:patientId", getPatientById);
