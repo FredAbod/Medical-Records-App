@@ -347,8 +347,9 @@ export const updatePharmacist = async (req, res, next) => {
     if (!pharmacist) {
       return errorResMsg(res, 406, "Pharmacist does not exist");
     }
+
       // Find the patient by name
-      const patient = await Patient.findById(patientId);
+      const patient = await Patient.findById(patientId.patientId);
       if (!patient) {
         return errorResMsg(res, 404, "Patient not found");
       }
@@ -361,6 +362,27 @@ export const updatePharmacist = async (req, res, next) => {
         success: true,
         medicationHistory,
         message: "Medication History retrieved successfully",
+      });
+    } catch (error) {
+      console.error(error);
+      return errorResMsg(res, 500, {
+        error: error.message,
+        message: "Internal server error",
+      });
+    }
+  };
+
+
+  export const getAllActivePatients = async (req, res, next) => {
+    try {
+      // Find all patients with admitted status equal to "true"
+      const patients = await Patient.find({ admitted: "true" });
+  
+      // Return the list of patients
+      return successResMsg(res, 200, {
+        success: true,
+        patients,
+        message: "Active patients retrieved successfully",
       });
     } catch (error) {
       console.error(error);
