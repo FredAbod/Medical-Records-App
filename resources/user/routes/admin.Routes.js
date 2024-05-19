@@ -4,6 +4,7 @@ import {
   createAdmin,
   createPatient,
   deActivatePatientsStatus,
+  getAllActivePatients,
   getAllPatient,
   getPatientById,
   loginAdmin,
@@ -25,6 +26,9 @@ router.post("/deactivate/:patientId", deActivatePatientsStatus);
 
 // Get All Patients
 router.get("/get", getAllPatient);
+
+// Get All Active Patients
+router.get("/get", getAllActivePatients);
 
 // Get All PatientsById
 router.get("/get/:patientId", getPatientById);

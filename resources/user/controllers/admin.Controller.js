@@ -228,14 +228,8 @@ export const loginAdmin = async (req, res, next) => {
 
   export const activatePatientsStatus = async (req, res, next) => {
     try {
-      const { patientId } =  req.params;
-      // const nurseId = req.user.nurseId;
+      const { patientId } = req.params;
   
-      // // Find the admin by email
-      // const nurse = await Nurse.findById({ _id: nurseId });
-      // if (!nurse) {
-      //   return errorResMsg(res, 406, "Nurse does not exist");
-      // }
       // Find the patient by name
       const patient = await Patient.findById(patientId);
       if (!patient) {
@@ -243,6 +237,7 @@ export const loginAdmin = async (req, res, next) => {
       }
   
       patient.admitted = "active";
+      patient.admittedExpires = Date.now() + 86400000; // 86400000 = 24 hours in milliseconds
       await patient.save();
   
       // Return success response
@@ -259,6 +254,7 @@ export const loginAdmin = async (req, res, next) => {
       });
     }
   };
+
   export const deActivatePatientsStatus = async (req, res, next) => {
     try {
       const { patientId } =  req.params;
@@ -283,6 +279,26 @@ export const loginAdmin = async (req, res, next) => {
         success: true,
         vitals: patient,
         message: "Patient Admitted successfully",
+      });
+    } catch (error) {
+      console.error(error);
+      return errorResMsg(res, 500, {
+        error: error.message,
+        message: "Internal server error",
+      });
+    }
+  };
+
+  export const getAllActivePatients = async (req, res, next) => {
+    try {
+      // Find all patients with admitted status equal to "true"
+      const patients = await Patient.find({ admitted: "true" });
+  
+      // Return the list of patients
+      return successResMsg(res, 200, {
+        success: true,
+        patients,
+        message: "Active patients retrieved successfully",
       });
     } catch (error) {
       console.error(error);

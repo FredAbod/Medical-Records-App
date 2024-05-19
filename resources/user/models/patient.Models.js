@@ -17,7 +17,9 @@ const patientSchema = new mongoose.Schema(
     genotype: { type: String, required: true },
     height: { type: String, required: true },
     weight: { type: String, required: true },
+    weight: { type: String, required: true },
     vitals: { type: String },
+    admittedExpires: { type: String },
     status: {
       type: String,
       default: "active",
