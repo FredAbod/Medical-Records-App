@@ -34,7 +34,7 @@ router.get('/getById/:id', getDoctorById);
 router.get('/patient',isAuthenticated, getAllPatientForDay);
 
 // Get All Paient For The Day
-router.get('/diagnosis', getPatientDiagnosis);
+router.get('/diagnosis/:id', getPatientDiagnosis);
 
 // Get Medical History
 router.get('/getPatientMedicalHistory/:patientId',isAuthenticated, getMedicalHistoryByPatientId);
