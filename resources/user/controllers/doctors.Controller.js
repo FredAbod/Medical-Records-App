@@ -208,10 +208,10 @@ export const updateDoctor = async (req, res, next) => {
     }
   };
   
-  export const getDoctorByName = async (req, res, next) => {
+  export const getDoctorById = async (req, res, next) => {
     try {
-      const name = req.params.name;
-      const doctor = await Doctor.findOne({ name });
+      const doctorId = req.params.id;
+      const doctor = await Doctor.findById(doctorId);
       if (!doctor) {
         return errorResMsg(res, 404, "Doctor not found");
       }
@@ -554,6 +554,27 @@ export const getPatientById = async (req, res, next) => {
       success: true,
       patient,
       message: "Patient retrieved successfully",
+    });
+  } catch (error) {
+    console.error(error);
+    return errorResMsg(res, 500, {
+      error: error.message,
+      message: "Internal server error",
+    });
+  }
+};
+
+export const getPatientDiagnosis = async (req, res, next) => {
+  try {
+    const patientId = req.params.id;
+    const diagnosis = await Diagnosis.findOne({patientId: patientId});
+    if (!diagnosis) {
+      return errorResMsg(res, 404, "diagnosis not found");
+    }
+    return successResMsg(res, 200, {
+      success: true,
+      diagnosis,
+      message: "diagnosis retrieved successfully",
     });
   } catch (error) {
     console.error(error);
