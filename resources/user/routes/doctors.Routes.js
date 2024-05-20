@@ -28,7 +28,7 @@ router.delete('/deleteDoctor',isAuthenticated, deleteDoctor);
 router.get('/get',isAuthenticated, getAllDoctors);
 
 // Get Doctor By Id
-router.get('/getById/:id',isAuthenticated, getDoctorById);
+router.get('/getById/:id', getDoctorById);
 
 // Get All Paient For The Day
 router.get('/patient',isAuthenticated, getAllPatientForDay);
