@@ -41,6 +41,6 @@ router.get('/searchBrand', searchMedicineByBrandName);
 router.post('/addMedicine', addMedicine);
 
 // Update Medicine
-router.post('/addMedicine', updateMedicine);
+router.post('/updateMedicine', updateMedicine);
 
 export default router;
