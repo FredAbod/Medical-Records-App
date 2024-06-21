@@ -4,12 +4,16 @@ import {
   createAdmin,
   createPatient,
   deActivatePatientsStatus,
+  deletePatient,
   getAllActivePatients,
   getAllPatient,
   getPatientById,
   loginAdmin,
+  updateDoctor,
+  updatePatient,
 } from "../controllers/admin.Controller.js";
 import { isAuthenticated } from "../../../middleware/isAuthenticated.js";
+import { deleteDoctor } from "../controllers/doctors.Controller.js";
 const router = express.Router();
 
 // Create admin route
@@ -35,5 +39,17 @@ router.get("/get/:patientId", getPatientById);
 
 // Add A Patient
 router.post("/addPatient", isAuthenticated, createPatient);
+
+// Update A Patient
+router.post("/updatePatient/:patientId", isAuthenticated, updatePatient);
+
+// Delete A Patient
+router.delete("/deletePatient/:patientId", isAuthenticated, deletePatient);
+
+// Update A Doctor Details
+router.put('/updateDoctor/:id',isAuthenticated, updateDoctor);
+
+// Delete A Doctor Details
+router.delete('/deleteDoctor/:id',isAuthenticated, deleteDoctor);
 
 export default router;

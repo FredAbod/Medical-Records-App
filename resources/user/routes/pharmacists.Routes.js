@@ -1,6 +1,6 @@
 import express from 'express';
 import { isAuthenticated } from '../../../middleware/isAuthenticated.js';
-import { addMedicalHistory, createPharmacist, deletePharmacist, getAllActivePatients, getAllPharmacists, getMedicationHistory, getPharmacistByName, loginPharmacist, updatePharmacist } from '../controllers/pharmacists.Controller.js';
+import { addMedicalHistory, createPharmacist, deletePharmacist, getAllActivePatients, getAllPharmacists, getMedicationHistory, getPatientsPrescription, getPharmacistByName, loginPharmacist, updatePharmacist } from '../controllers/pharmacists.Controller.js';
 const router = express.Router();
 
 
@@ -30,5 +30,8 @@ router.get('/get',isAuthenticated, getPharmacistByName);
 
 // Get Doctor By Name
 router.get('/getActivePatients', getAllActivePatients);
+
+// Get Patients Preescription
+router.get('/prescription/:patientId', getPatientsPrescription);
 
 export default router;

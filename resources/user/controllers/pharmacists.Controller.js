@@ -4,9 +4,11 @@ import { errorResMsg, successResMsg } from "../../../utils/lib/response.js";
 import Admin from "../models/admin.Models.js";
 import Diagnosis from "../models/diagnosis.Models.js";
 import Doctor from "../models/doctors.Models.js";
+import Medicine from "../models/medecine.models.js";
 import MedicalHistory from "../models/medicalHistory.Models.js";
 import Patient from "../models/patient.Models.js";
 import Pharmacist from "../models/pharmacists.Models.js";
+import Prescription from "../models/prescription.Models.js";
 
 
 export const createPharmacist = async (req, res, next) => {
@@ -392,3 +394,120 @@ export const updatePharmacist = async (req, res, next) => {
       });
     }
   };
+
+  export const getPatientsPrescription = async (req, res, next) => {
+    try {
+      const {patientId} = req.params
+   
+      const prescription = await Prescription.findOne({patientId: patientId})
+  
+      // Return the list of patients
+      return successResMsg(res, 200, {
+        success: true,
+        prescription,
+        message: "Active patients retrieved successfully",
+      });
+    } catch (error) {
+      console.error(error);
+      return errorResMsg(res, 500, {
+        error: error.message,
+        message: "Internal server error",
+      });
+    }
+  };
+
+  // Add a new medicine
+export const addMedicine = async (req, res) => {
+  try {
+    const { brandName, availableNumber, description, expiryDate } = req.body;
+    const medicine = new Medicine({
+      brandName,
+      availableNumber,
+      description,
+      expiryDate
+    });
+    await medicine.save();
+    return res.status(201).json({
+      success: true,
+      message: 'Medicine added successfully',
+      medicine,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      success: false,
+      message: 'Internal server error',
+      error: error.message,
+    });
+  }
+};
+
+// Get all medicines
+export const getMedicines = async (req, res) => {
+  try {
+    const medicines = await Medicine.find();
+    return res.status(200).json({
+      success: true,
+      medicines,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      success: false,
+      message: 'Internal server error',
+      error: error.message,
+    });
+  }
+};
+
+// Search medicine by brand name
+export const searchMedicineByBrandName = async (req, res) => {
+  try {
+    const { brandName } = req.query;
+    const medicines = await Medicine.find({ brandName: new RegExp(brandName, 'i') });
+    return res.status(200).json({
+      success: true,
+      medicines,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      success: false,
+      message: 'Internal server error',
+      error: error.message,
+    });
+  }
+};
+
+// Update medicine availability
+export const updateMedicine = async (req, res) => {
+  try {
+    const { brandName } = req.params;
+    const { availableNumber, description, expiryDate } = req.body;
+    const medicine = await Medicine.findOneAndUpdate(
+      { brandName },
+      { availableNumber, description, expiryDate },
+      { new: true }
+    );
+
+    if (!medicine) {
+      return res.status(404).json({
+        success: false,
+        message: 'Medicine not found',
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: 'Medicine updated successfully',
+      medicine,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      success: false,
+      message: 'Internal server error',
+      error: error.message,
+    });
+  }
+};

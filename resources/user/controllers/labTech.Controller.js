@@ -310,6 +310,35 @@ export const createLabTech = async (req, res, next) => {
       });
     }
   };
+  export const getPatientLabOrder = async (req, res, next) => {
+    try {
+       // Extract patient ID from URL parameters
+       const { patientId } = req.params;
+       // Find the patient by ID
+       const patient = await Patient.findById(patientId).where({ status: "active" });
+   
+      if (!patient) {
+        return errorResMsg(res, 404, {
+          message: "Patient not found",
+        });
+      }
+  
+      // Find lab orders for the patient
+      const labOrders = await LabOrder.find({ patientId: patient._id });
+  
+      return successResMsg(res, 200, {
+        success: true,
+        labOrders,
+        message: "Lab orders retrieved successfully",
+      });
+    } catch (error) {
+      console.error(error);
+      return errorResMsg(res, 500, {
+        error: error.message,
+        message: "Internal server error",
+      });
+    }
+  };
   export const getAllPatientForDay = async (req, res, next) => {
     try {
         

@@ -14,4 +14,4 @@ const labResultSchema = new mongoose.Schema({
 
 const labResult  = mongoose.model('labResult ', labResultSchema);
 
-export default labResult ;
+export default labResult;

@@ -1,6 +1,6 @@
 import express from 'express';
 import { isAuthenticated } from '../../../middleware/isAuthenticated.js';
-import { addDiagnosis, addLabOrder, addPrescription, createDoctor, deleteDoctor, getAllDoctors, getAllPatientForDay, getDoctorById,  getLabResultByPatientId,  getMedicalHistoryByPatientId, getPatientDiagnosis, loginDoctor, updateDoctor } from '../controllers/doctors.Controller.js';
+import { addDiagnosis, addLabOrder, addPrescription, createDoctor, deleteDoctor, getAllDoctors, getAllPatientForDay, getDoctorById,  getLabResultByPatientId,  getMedicalHistoryByPatientId, getPatientDiagnosis, loginDoctor } from '../controllers/doctors.Controller.js';
 const router = express.Router();
 
 // Add A Doctor
@@ -17,9 +17,6 @@ router.post('/addPrescription/:patientId',isAuthenticated, addPrescription);
 
 // Create A Lab Order
 router.post('/labOrder/:patientId',isAuthenticated, addLabOrder);
-
-// Update A Doctor Details
-router.patch('/updateDoctor/:id',isAuthenticated, updateDoctor);
 
 // Delete A Doctor Details
 router.delete('/deleteDoctor',isAuthenticated, deleteDoctor);
